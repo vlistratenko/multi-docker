@@ -1,0 +1,22 @@
+sudo: required
+services:
+    - docker
+    
+before_install:
+    - docker build -t vital/test -f ./client/Dockerfile.dev ./client
+    
+script:
+    - docker run vital/test npm test -- --coverage
+    
+after_success:
+    - docker build -t vital/client ./client
+    - docker build -t vital/nginx ./nginx
+    - docker build -t vital/server ./server
+    - docker build -t vital/worker ./worker
+    
+    - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --pasword-stdin
+    
+    -docker push vital/client
+    -docker push vital/nginx
+    -docker push vital/server
+    -docker push vital/worker
