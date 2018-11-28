@@ -13,7 +13,7 @@ after_success:
     - docker build -t vital/server ./server
     - docker build -t vital/worker ./worker
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-    -docker push vital/client
-    -docker push vital/nginx
-    -docker push vital/server
-    -docker push vital/worker
+    - docker push vital/client
+    - docker push vital/nginx
+    - docker push vital/server
+    - docker push vital/worker
